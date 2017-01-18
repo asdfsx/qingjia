@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="qingjia.qingjd_list">
+      <field name="name">qingjd list</field>
+      <field name="model">qingjia.qingjd</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="beginning"/>
+          <field name="ending"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="qingjia.action_qingjia_qingjd">
+        <field name="name">请假单</field>
+        <field name="res_model">qingjia.qingjd</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="qingjia.qingjia_qingjd_form">
+        <field name="name">qing jia dan form</field>
+        <field name="model">qingjia.qingjd</field>
+        <field name="arch" type="xml">
+            <header>
+                <button name="btn_confirm" type="workflow" states="draft" string="发送" class="oe_highlight"/>
+                <button name="btn_accept" type="workflow" states="confirmed" string="批准" class="oe_highlight"/>
+                <button name="btn_reject" type="workflow" states="confirmed" string="拒绝" class="oe_highlight"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,accepted,rejected" class="oe_highlight" type="workflow"/>
+            </header>
+            <form>
+                <sheet>
+                    <group name="group_top" string="请假单">
+                        <group name="group_left">
+                            <field name="name"/>
+                            <field name="beginning"/>
+                        </group>
+                        <group name="group_right">
+                            <field name="manager"/>
+                            <field name="ending"/>
+                        </group>
+                    </group>
+                    <group name="group_below">
+                        <field name="reason"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="qingjia.menu_qingjia" name="请假" sequence="0"></menuitem>
+    <menuitem id="qingjia.menu_qingjia_qingjiadan" name="请假单" parent="qingjia.menu_qingjia"></menuitem>
+    <menuitem id="qingjia.menu_qingjia_qingjiadan_qingjiadan" name="列表" parent="qingjia.menu_qingjia_qingjiadan" action="qingjia.action_qingjia_qingjd"></menuitem>
+  </data>
+</odoo>
