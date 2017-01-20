@@ -23,7 +23,7 @@ class Qingjd(models.Model):
     reason = fields.Text(string="请假事由", required=True)
     accept_reason = fields.Text(string="同意理由", default="同意")
 
-    current_name = fields.Many2one('hr.employee', string="当前登录人", compute="_get_current_name")
+    current_name = fields.Many2one('res.users', string="当前登录人", compute="_get_current_name")
     is_manager = fields.Boolean(compute="_get_is_manager")
 
     state = fields.Selection([('draft','草稿'),
@@ -59,32 +59,25 @@ class Qingjd(models.Model):
 
     def _get_current_name(self):
         uid = self.env.uid
-        res = self.env['resource.resource'].search([('user_id', '=', uid)])
+        res = self.env['res.users'].search([('id', '=', uid)])
         self.current_name = res
-        #name = res.name
-        #employee = self.env['hr.employee'].search([('name_related','=',name)])
-        #self.current_name = employee
 
-    def draft(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, ids, {'state':'draft'}, context=context)
+    @api.model
+    def draft(self):
+        self.write({'state':'draft'})
         return True
 
-    def confirm(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, ids, {'state':'confirm'}, context=context)
+    @api.model
+    def confirm(self):
+        self.write({'state':'confirmed'})
         return True
 
-    def accept(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, ids, {'state':'accept'}, context=context)
+    @api.model
+    def accept(self):
+        self.write({'state':'accepted'})
         return True
 
-    def reject(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, ids, {'state':'reject'}, context=context)
+    @api.model
+    def reject(self):
+        self.write({'state':'rejected'})
         return True

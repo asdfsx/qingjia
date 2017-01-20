@@ -16,21 +16,21 @@
     <record model="ir.actions.act_window" id="qingjia.action_qingjia_qingjd">
         <field name="name">请假单</field>
         <field name="res_model">qingjia.qingjd</field>
+        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
 
     <record model="ir.ui.view" id="qingjia.qingjia_qingjd_form">
         <field name="name">qing jia dan form</field>
         <field name="model">qingjia.qingjd</field>
         <field name="arch" type="xml">
+            <form>
             <header>
                 <button name="btn_confirm" type="workflow" states="draft" string="发送" class="oe_highlight"/>
                 <button name="btn_accept" type="workflow" states="confirmed" string="批准" class="oe_highlight"/>
                 <button name="btn_reject" type="workflow" states="confirmed" string="拒绝" class="oe_highlight"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,accepted,rejected" class="oe_highlight" type="workflow"/>
             </header>
-            <form>
                 <sheet>
                     <group name="group_top" string="请假单">
                         <group name="group_left">

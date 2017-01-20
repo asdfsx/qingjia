@@ -38,7 +38,7 @@
         <record id="qingjia_confirm2accept" model="workflow.transition">
             <field name="act_from" ref="act_confirm"/>
             <field name="act_to" ref="act_accept"/>
-            <field name="signal">btn_reject</field>
+            <field name="signal">btn_accept</field>
             <field name="condition">is_manager</field>
         </record>
         <record id="qingjia_confirm2reject" model="workflow.transition">
